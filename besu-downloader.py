@@ -78,7 +78,6 @@ if __name__ == "__main__":
         shutil.rmtree(os.path.join(extract_dir, f"{repo_name}-{tag_name}"))
         print(f"Extracted archive to: {extract_dir}")
 
-        # Optional: Remove the downloaded archive if you don't need it anymore
         os.remove(save_path)
         print(f"Removed downloaded archive: {save_path}")
 

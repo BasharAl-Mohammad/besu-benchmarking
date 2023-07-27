@@ -73,7 +73,6 @@ def generate_genesis_block(name, num_nodes):
         }
     }
 
-    # Create the 'config' directory if it doesn't exist
     if not os.path.exists("config"):
         os.makedirs("config")
 
@@ -84,14 +83,11 @@ def generate_genesis_block(name, num_nodes):
 
 def generate_keys(name):
     config_file = f"config/{name}genesis.json"
-    # Define the command to run
     command = f"besu/bin/besu operator generate-blockchain-config --config-file={config_file} --to=networkFiles --private-key-file-name=key"
 
     try:
-        # Run the command
         result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True)
 
-        # Print the output
         print("Command executed successfully:")
         print(result.stdout)
 
@@ -102,22 +98,17 @@ def generate_keys(name):
 def copy_keys(name):
     source_dir = "networkFiles"
     destination_dir = f"{name}-Network"
-    # Get a list of subdirectories in the source directory's 'keys' folder
     keys_dir = os.path.join(source_dir, 'keys')
     subdirectories = [name for name in os.listdir(keys_dir) if os.path.isdir(os.path.join(keys_dir, name))]
     
-    # Copy genesis.json to the QBFT-Network folder
     shutil.copy(os.path.join(source_dir, 'genesis.json'), destination_dir)
     
-    # Iterate through each subdirectory (address) in the 'keys' folder
     for i, address in enumerate(subdirectories, start=1):
         source_address_dir = os.path.join(keys_dir, address)
         destination_subdir = os.path.join(destination_dir, f'Node-{i}', 'data')
         
-        # Create the data folder in QBFT-Network/Node-X if it doesn't exist
         os.makedirs(destination_subdir, exist_ok=True)
         
-        # Copy the key and key.pub files to the corresponding Node-X/data folder
         shutil.copy(os.path.join(source_address_dir, 'key'), destination_subdir)
         shutil.copy(os.path.join(source_address_dir, 'key.pub'), destination_subdir)
 

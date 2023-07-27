@@ -28,7 +28,6 @@ import json
 def run_besu_command():
     command = "besu/bin/besu --data-path=Clique-Network/Node-1/data public-key export-address --to=Clique-Network/Node-1/data/node1Address"
     try:
-        # Execute the command using subprocess.run()
         subprocess.run(command, shell=True, check=True)
         print("Command executed successfully.")
     except subprocess.CalledProcessError as e:
@@ -42,7 +41,6 @@ def read_address_from_file(file_path):
         with open(file_path, 'r') as file:
             address = file.read().strip()
 
-            # Remove the '0x' prefix if it exists
             if address.startswith('0x'):
                 address = address[2:]
 
@@ -98,20 +96,16 @@ def create_genesis_file(file_path, node1_address, blockperiodseconds, epochlengt
 
 if __name__ == "__main__":
     name, num_nodes = create_network_structure()
-    # Run the Besu command
     run_besu_command()
 
-    # Read the address from the file
     file_path = "Clique-Network/Node-1/data/node1Address"
     node1_address = read_address_from_file(file_path)
 
     if node1_address:
         print("Extracted Address:", node1_address)
 
-        # Prompt for blockperiodseconds and epochlength
         blockperiodseconds = int(input("Enter blockperiodseconds: "))
         epochlength = int(input("Enter epochlength: "))
 
-        # Create the genesis file
         genesis_file_path = "Clique-Network/genesis.json"
         create_genesis_file(genesis_file_path, node1_address, blockperiodseconds, epochlength)
