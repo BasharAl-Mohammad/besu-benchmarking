@@ -3,3 +3,4 @@ config/config.toml
 networkFiles/
 QBFT-Network/
 caliper-benchmarks/
+Clique-Network/
