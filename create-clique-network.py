@@ -22,9 +22,6 @@ def create_network_structure():
         print("Invalid input. Please enter a valid number.")
         return None, None
 
-import subprocess
-import json
-
 def run_besu_command():
     command = "besu/bin/besu --data-path=Clique-Network/Node-1/data public-key export-address --to=Clique-Network/Node-1/data/node1Address"
     try:
